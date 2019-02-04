@@ -10,6 +10,8 @@ import {
 import { fetchContacts } from 'utils/api';
 import ContactListItem from 'components/ContactListItem';
 
+const keyExtractor = ({ phone }) => phone;
+
 export default class Contacts extends Component {
   state = {
     contacts: [],

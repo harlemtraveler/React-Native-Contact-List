@@ -5,10 +5,10 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator
-} from 'react-naive';
+} from 'react-native';
 
-import { fetchContacts } from 'utils/api';
-import ContactListItem from 'components/ContactListItem';
+import { fetchContacts } from '../utils/api';
+import ContactListItem from '../components/ContactListItem';
 
 const keyExtractor = ({ phone }) => phone;
 

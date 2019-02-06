@@ -7,8 +7,8 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import { fetchContacts } from '../utils/api';
 import ContactListItem from '../components/ContactListItem';
+import { fetchContacts } from '../utils/api';
 
 const keyExtractor = ({ phone }) => phone;
 
@@ -37,9 +37,18 @@ export default class Contacts extends Component {
   }
 
   renderContact = ({ item }) => {
+    // Required for navigation to work
+    const { navigation: { navigate } } = this.props;
     const { name, avatar, phone } = item;
 
-    return <ContactListItem name={name} avatar={avatar} phone={phone} />;
+    return (
+      <ContactListItem
+        name={name}
+        avatar={avatar}
+        phone={phone}
+        onPress={() => navigate('Profile')}
+      />
+    );
   };
 
   render() {

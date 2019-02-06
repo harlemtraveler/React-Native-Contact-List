@@ -7,6 +7,6 @@ export default StackNavigator({
     screen: Contacts,
   },
   Profile: {
-    screen: Profile
+    screen: Profile,
   },
 });

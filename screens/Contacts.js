@@ -8,15 +8,28 @@ import {
 } from 'react-native';
 
 import ContactListItem from '../components/ContactListItem';
+import { MaterialIcons } from '@expo/vector-icons';
 import { fetchContacts } from '../utils/api';
+import colors from '../utils/colors';
 
 const keyExtractor = ({ phone }) => phone;
 
 export default class Contacts extends Component {
-  static navigationOptions = {
+  // static navigationOptions = {
+  //   title: 'Contacts',
+  // };
+  static navigationOptions = ({ navigation: { navigate } }) => ({
     title: 'Contacts',
-  };
-  
+    headerLeft: (
+      <MaterialIcons
+        name='menu'
+        size={24}
+        style={{ color: colors.black, marginLeft: 10 }}
+        onPress={() => navigate('DrawerToggle')}
+      />
+    ),
+  });
+
   state = {
     contacts: [],
     loading: true,

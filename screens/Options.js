@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-naive';
-import { MaterialIcons } from '@expo/vector-iocns';
+import { View, StyleSheet } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import colors from '../utils/colors';
 import DetailListItem from '../components/DetailListItem';

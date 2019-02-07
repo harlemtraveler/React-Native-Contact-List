@@ -8,16 +8,33 @@ import {
 
 import colors from '../utils/colors';
 import { fetchUserContact } from '../utils/api';
+import { MaterialIcons } from '@expo/vector-icons';
 import ContactThumbnail from '../components/ContactThumbnail';
 
 export default class User extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation: { navigate } }) => ({
     title: 'Me',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: colors.blue,
     },
-  };
+    // headerLeft: (
+    //   <MaterialIcons
+    //     name='menu'
+    //     size={24}
+    //     style={{ color: 'white', marginLeft: 10 }}
+    //     onPress={() => navigate('DrawerToggle')}
+    //   />
+    // ),
+    headerRight: (
+      <MaterialIcons
+        name='settings'
+        size={24}
+        style={{ color: 'white', marginRight: 10 }}
+        onPress={() => navigate('Options')}
+      />
+    ),
+  });
 
   state = {
     user: [],

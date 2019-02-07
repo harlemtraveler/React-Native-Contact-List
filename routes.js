@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Favorites from './screens/Favorites';
 import Contacts from './screens/Contacts';
 import Profile from './screens/Profile';
+import Options from './screens/Options';
 import User from './screens/User';
 import colors from './utils/colors';
 
@@ -58,8 +59,12 @@ const UserScreens = StackNavigator(
     User: {
       screen: User,
     },
+    Options: {
+      screen: Options,
+    },
   },
   {
+    mode: 'modal',
     initialRouteName: 'User',
     navigationOptions: {
       tabBarIcon: getTabBarIcon('person'),

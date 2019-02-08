@@ -15,12 +15,10 @@ import colors from '../utils/colors';
 const keyExtractor = ({ phone }) => phone;
 
 export default class Contacts extends Component {
-  // static navigationOptions = {
-  //   title: 'Contacts',
-  // };
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = {
     title: 'Contacts',
   };
+
   // static navigationOptions = ({ navigation: { navigate } }) => ({
   //   title: 'Contacts',
   //   headerLeft: (

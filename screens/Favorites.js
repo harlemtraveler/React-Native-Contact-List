@@ -15,12 +15,10 @@ import ContactThumbnail from '../components/ContactThumbnail';
 const keyExtractor = ({ phone }) => phone;
 
 export default class Favorites extends Component {
-  // static navigationOptions = {
-  //   title: 'Favorites',
-  // };
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = {
     title: 'Favorites',
   };
+
   // static navigationOptions = ({ navigation: { navigate } }) => ({
   //   title: 'Favorites',
   //   headerLeft: (

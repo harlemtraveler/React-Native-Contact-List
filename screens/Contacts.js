@@ -15,20 +15,20 @@ import colors from '../utils/colors';
 const keyExtractor = ({ phone }) => phone;
 
 export default class Contacts extends Component {
-  // static navigationOptions = {
-  //   title: 'Contacts',
-  // };
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = {
     title: 'Contacts',
-    headerLeft: (
-      <MaterialIcons
-        name='menu'
-        size={24}
-        style={{ color: colors.black, marginLeft: 10 }}
-        onPress={() => navigate('DrawerToggle')}
-      />
-    ),
-  });
+  };
+  // static navigationOptions = ({ navigation: { navigate } }) => ({
+  //   title: 'Contacts',
+  //   headerLeft: (
+  //     <MaterialIcons
+  //       name='menu'
+  //       size={24}
+  //       style={{ color: colors.black, marginLeft: 10 }}
+  //       onPress={() => navigate('DrawerToggle')}
+  //     />
+  //   ),
+  // });
 
   state = {
     contacts: [],

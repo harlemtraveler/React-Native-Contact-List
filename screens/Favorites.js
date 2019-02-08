@@ -15,20 +15,20 @@ import ContactThumbnail from '../components/ContactThumbnail';
 const keyExtractor = ({ phone }) => phone;
 
 export default class Favorites extends Component {
-  // static navigationOptions = {
-  //   title: 'Favorites',
-  // };
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = {
     title: 'Favorites',
-    headerLeft: (
-      <MaterialIcons
-        name='menu'
-        size={24}
-        style={{ color: colors.black, marginLeft: 10 }}
-        onPress={() => navigate('DrawerToggle')}
-      />
-    ),
-  });
+  };
+  // static navigationOptions = ({ navigation: { navigate } }) => ({
+  //   title: 'Favorites',
+  //   headerLeft: (
+  //     <MaterialIcons
+  //       name='menu'
+  //       size={24}
+  //       style={{ color: colors.black, marginLeft: 10 }}
+  //       onPress={() => navigate('DrawerToggle')}
+  //     />
+  //   ),
+  // });
 
   state = {
     contacts: [],

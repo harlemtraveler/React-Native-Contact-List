@@ -11,6 +11,7 @@ import ContactListItem from '../components/ContactListItem';
 import { MaterialIcons } from '@expo/vector-icons';
 import { fetchContacts } from '../utils/api';
 import colors from '../utils/colors';
+import store from '../store';
 
 const keyExtractor = ({ phone }) => phone;
 
@@ -19,39 +20,31 @@ export default class Contacts extends Component {
     title: 'Contacts',
   };
 
-  // static navigationOptions = ({ navigation: { navigate } }) => ({
-  //   title: 'Contacts',
-  //   headerLeft: (
-  //     <MaterialIcons
-  //       name='menu'
-  //       size={24}
-  //       style={{ color: colors.black, marginLeft: 10 }}
-  //       onPress={() => navigate('DrawerToggle')}
-  //     />
-  //   ),
-  // });
-
   state = {
-    contacts: [],
-    loading: true,
-    error: false,
+    // Initial fetch of State from Store
+    contacts: store.getState().contacts,
+    loading: store.getState().isFetchingContacts,
+    error: store.getState().error,
   };
 
   async componentDidMount() {
-    try {
-      const contacts = await fetchContacts();
+    // Prep unsubscribe func
+    this.unsubscribe = store.onChange(() => this.setState({
+      contacts: store.getState().contacts,
+      loading: store.getState().isFetchingContacts,
+      errors: store.getState().errors,
+    }));
 
-      this.setState({
-        contacts,
-        loading: false,
-        error: false,
-      });
-    } catch (e) {
-      this.setState({
-        loading: false,
-        error: true,
-      });
-    }
+    // Fetch State from Store
+    const contacts = await fetchContacts();
+
+    // Update State
+    store.setState({ contacts, isFetchingContacts: false });
+  }
+
+  // Stop listening for changes from Store
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   renderContact = ({ item }) => {

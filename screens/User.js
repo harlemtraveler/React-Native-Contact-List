@@ -6,6 +6,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 
+import store from '../store';
 import colors from '../utils/colors';
 import { fetchUserContact } from '../utils/api';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -18,14 +19,6 @@ export default class User extends Component {
     headerStyle: {
       backgroundColor: colors.blue,
     },
-    // headerLeft: (
-    //   <MaterialIcons
-    //     name='menu'
-    //     size={24}
-    //     style={{ color: 'white', marginLeft: 10 }}
-    //     onPress={() => navigate('DrawerToggle')}
-    //   />
-    // ),
     headerRight: (
       <MaterialIcons
         name='settings'
@@ -37,26 +30,25 @@ export default class User extends Component {
   });
 
   state = {
-    user: [],
-    loading: true,
-    error: false,
+    user: store.getState().user,
+    loading: store.getState().isFetchingUser,
+    error: store.getState().error,
   };
 
   async componentDidMount() {
-    try {
-      const user = await fetchUserContact();
+    this.unsubscribe = store.onChange(() => this.setState({
+      user: store.getState().user,
+      loading: store.getState().isFetchingUser,
+      error: store.getState().error
+    }));
 
-      this.setState({
-        user,
-        loading: false,
-        error: false,
-      });
-    } catch (e) {
-      this.setState({
-        loading: false,
-        error: true,
-      });
-    }
+    const user = await fetchUserContact();
+
+    store.setState({ user, isFetchingUser: false });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {

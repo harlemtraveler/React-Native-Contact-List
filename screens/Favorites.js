@@ -7,6 +7,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 
+import store from '../store';
 import colors from '../utils/colors';
 import { fetchContacts } from '../utils/api';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -19,39 +20,33 @@ export default class Favorites extends Component {
     title: 'Favorites',
   };
 
-  // static navigationOptions = ({ navigation: { navigate } }) => ({
-  //   title: 'Favorites',
-  //   headerLeft: (
-  //     <MaterialIcons
-  //       name='menu'
-  //       size={24}
-  //       style={{ color: colors.black, marginLeft: 10 }}
-  //       onPress={() => navigate('DrawerToggle')}
-  //     />
-  //   ),
-  // });
-
   state = {
-    contacts: [],
-    loading: true,
-    error: false,
+    contacts: store.getState().contacts,
+    loading: store.getState().isFetchingContacts,
+    error: store.getState().error,
   };
 
   async componentDidMount() {
-    try {
-      const contacts = await fetchContacts();
+    const { contacts } = this.state;
 
-      this.setState({
-        contacts,
-        loading: false,
-        error: false,
-      });
-    } catch (e) {
-      this.setState({
-        loading: false,
-        error: true,
+    this.unsubscribe = store.onChange(() => this.setState({
+      contacts: store.getState().contacts,
+      loading: store.getState().isFetchingContacts,
+      error: store.getState().error,
+    }));
+
+    if (contacts.length === 0) {
+      const fetchedContacts = await fetchContacts();
+
+      store.setState({
+        contacts: fetchedContacts,
+        isFetchingContacts: false,
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   renderFavoriteThumbnail = ({ item }) => {

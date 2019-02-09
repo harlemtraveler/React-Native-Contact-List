@@ -23,24 +23,20 @@ export default class Contacts extends Component {
   });
 
   state = {
-    // Initial fetch of State from Store
     contacts: store.getState().contacts,
     loading: store.getState().isFetchingContacts,
     error: store.getState().error,
   };
 
   async componentDidMount() {
-    // Prep unsubscribe func
     this.unsubscribe = store.onChange(() => this.setState({
       contacts: store.getState().contacts,
       loading: store.getState().isFetchingContacts,
-      errors: store.getState().errors,
+      error: store.getState().error,
     }));
 
-    // Fetch State from Store
     const contacts = await fetchContacts();
 
-    // Update State
     store.setState({ contacts, isFetchingContacts: false });
 
     Linking.addEventListener('url', this.handleOpenUrl);
@@ -49,7 +45,6 @@ export default class Contacts extends Component {
     this.handleOpenUrl({ url });
   }
 
-  // Stop listening for changes from Store
   componentWillUnmount() {
     Linking.removeEventListener('url', this.handleOpenUrl);
     this.unsubscribe();
@@ -63,9 +58,7 @@ export default class Contacts extends Component {
     if (params.name) {
       const queriedContact = store
         .getState()
-        .contacts
-        .find(contact =>
-          contact.name.split(' ')[0].toLowerCase() === params.name.toLowerCase());
+        .contacts.find(contact => contact.name.split(' ')[0].toLowerCase() === params.name.toLowerCase());
 
       if (queriedContact) {
         navigate('Profile', { id: queriedContact.id });
@@ -74,7 +67,6 @@ export default class Contacts extends Component {
   }
 
   renderContact = ({ item }) => {
-    // Required for navigation to work
     const { navigation: { navigate } } = this.props;
     const { id, name, avatar, phone } = item;
 

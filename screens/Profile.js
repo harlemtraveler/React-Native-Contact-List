@@ -3,8 +3,8 @@ import { View, StyleSheet } from 'react-native';
 
 import ContactThumbnail from '../components/ContactThumbnail';
 import DetailListItem from '../components/DetailListItem';
-import { fetchRandomContact } from '../utils/api';
 import colors from '../utils/colors';
+import store from '../store';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation: { state: { params } } }) => {
